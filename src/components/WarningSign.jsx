@@ -5,9 +5,7 @@ const WarningSign = ({ alertContent }) => {
     <Container className="mt-3">
       <Row className="justify-content-center">
         <Col md={6}>
-          <Alert variant="danger">
-            <p>{alertContent}</p>
-          </Alert>
+          <Alert variant="danger">{alertContent}</Alert>
         </Col>
       </Row>
     </Container>

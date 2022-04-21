@@ -1,23 +1,32 @@
-import { Card, Col } from "react-bootstrap"
+import { Component } from "react"
+import { Card } from "react-bootstrap"
 
-const SingleBook = ({ book }) => {
-  const { img, title } = book
+class SingleBook extends Component {
+  state = {
+    selected: false,
+  }
 
-  return (
-    <>
-      {book && (
-        <Col md={3}>
-          <h5>Single Book</h5>
-          <Card>
-            {<Card.Img variant="top" src={img} />}
-            <Card.Body>
-              <Card.Title>{title}</Card.Title>
-            </Card.Body>
-          </Card>
-        </Col>
-      )}
-    </>
-  )
+  render() {
+    return (
+      <Card
+        onClick={() => this.setState({ selected: !this.state.selected })}
+        style={{ border: this.state.selected ? "2px solid red" : "none" }}
+      >
+        {<Card.Img variant="top" src={this.props.book.img} height="300px" />}
+        <Card.Body>
+          <Card.Title
+            style={{
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
+            {this.props.book.title}
+          </Card.Title>
+        </Card.Body>
+      </Card>
+    )
+  }
 }
 
 export default SingleBook

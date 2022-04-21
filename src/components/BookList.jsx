@@ -1,28 +1,36 @@
-// Create a BookList component.
-//  This component receives by props a list of books and displays them using the SingleBook component.
-
-import { Container, Row, InputGroup, FormControl, Col } from "react-bootstrap"
 import SingleBook from "./SingleBook"
-
-const BookList = ({ booksArray }) => {
-  return (
-    <>
+import { Container, Row, Col, Form } from "react-bootstrap"
+import { Component } from "react"
+class BookList extends Component {
+  state = {
+    searchQuery: "",
+  }
+  render() {
+    return (
       <Container>
-        <Row className="justify-content-center">
-          <Col md={4}>
-            <InputGroup className="mb-3">
-              <FormControl placeholder="searchBooks..." />
-            </InputGroup>
+        <Row>
+          <Col md={3} className="mb-3">
+            <Form.Control
+              type="text"
+              placeholder="Search Books..."
+              value={this.state.searchQuery}
+              onChange={(e) => this.setState({ searchQuery: e.target.value })}
+            />
           </Col>
         </Row>
+        <Row>
+          {this.props.booksArray
+            .filter((bookList) =>
+              bookList.title.toLowerCase().includes(this.state.searchQuery)
+            )
+            .map((bookList) => (
+              <Col md={2} className="mb-2" key={bookList.asin}>
+                <SingleBook book={bookList} />
+              </Col>
+            ))}
+        </Row>
       </Container>
-
-      {booksArray.slice(0, 4).map((book) => (
-        <Container>
-          <SingleBook key={book.asin} book={book} />
-        </Container>
-      ))}
-    </>
-  )
+    )
+  }
 }
 export default BookList
