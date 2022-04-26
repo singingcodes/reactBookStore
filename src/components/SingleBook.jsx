@@ -1,21 +1,17 @@
 import { Component } from "react"
-import { Card, Container, Row, Col } from "react-bootstrap"
-import CommentArea from "./CommentArea"
+import { Card } from "react-bootstrap"
 
 class SingleBook extends Component {
-  state = {
-    selected: false,
-  }
-
   render() {
     return (
       <>
         <Card
-          onClick={() => this.setState({ selected: !this.state.selected })}
+          onClick={() => this.props.changeSelectedBook(this.props.book.asin)}
           style={{
-            boxShadow: this.state.selected
-              ? "0px 5px 15px 5px #000000"
-              : "none",
+            boxShadow:
+              this.props.selectedBook === this.props.book.asin
+                ? "1px -1px 21px -1px rgba(0,0,0,0.75)"
+                : "none",
           }}
         >
           {<Card.Img variant="top" src={this.props.book.img} height="300px" />}
@@ -32,15 +28,6 @@ class SingleBook extends Component {
             <Card.Text></Card.Text>
           </Card.Body>
         </Card>
-        <Container>
-          <Row>
-            <Col>
-              {this.state.selected && (
-                <CommentArea asin={this.props.book.asin} />
-              )}
-            </Col>
-          </Row>
-        </Container>
       </>
     )
   }
