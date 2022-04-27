@@ -1,8 +1,7 @@
-import React, { Component } from "react"
 import { Button } from "react-bootstrap"
 
-class CommentListItem extends Component {
-  deleteComment = async (asin) => {
+const CommentListItem = (props) => {
+  const deleteComment = async (asin) => {
     try {
       let response = await fetch(
         "https://striveschool-api.herokuapp.com/api/comments/" + asin,
@@ -24,19 +23,17 @@ class CommentListItem extends Component {
     }
   }
 
-  render() {
-    return (
-      <>
-        Comment:{this.props.comment.comment}{" "}
-        <Button
-          variant="outline-danger"
-          className="float-right"
-          onClick={() => this.deleteComment(this.props.comment._id)}
-        >
-          Delete
-        </Button>
-      </>
-    )
-  }
+  return (
+    <>
+      Comment:{props.comment.comment}{" "}
+      <Button
+        variant="outline-danger"
+        className="float-right"
+        onClick={() => deleteComment(props.comment._id)}
+      >
+        Delete
+      </Button>
+    </>
+  )
 }
 export default CommentListItem

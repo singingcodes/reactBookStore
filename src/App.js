@@ -4,20 +4,19 @@ import MyNav from "./components/MyNav"
 import books from "./data/romance.json"
 // import SingleBook from "./components/SingleBook"
 import BookList from "./components/BookList"
-import { Component } from "react"
+import MyFooter from "./components/MyFooter"
 
-class App extends Component {
-  render() {
-    return (
-      <div>
-        <MyNav />
-        {/* <WarningSign alertContent="Warning" />
+const App = () => {
+  return (
+    <div>
+      <MyNav />
+      {/* <WarningSign alertContent="Warning" />
         <MyBadge badgeContent="Info!!!" color="success" /> */}
-        {/* <SingleBook book={books[0]} /> */}
+      {/* <SingleBook book={books[0]} /> */}
 
-        <BookList booksArray={books} />
-      </div>
-    )
-  }
+      <BookList booksArray={books} />
+      <MyFooter />
+    </div>
+  )
 }
 export default App

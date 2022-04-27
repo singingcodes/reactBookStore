@@ -1,14 +1,19 @@
-import React, { Component } from "react"
+import React, { useState } from "react"
 import { Form, Button } from "react-bootstrap"
-class AddComments extends Component {
-  state = {
-    bookComment: {
-      comment: "",
-      rate: "",
-    },
-  }
+const AddComments = (props) => {
+  // state = {
+  //   bookComment: {
+  //     comment: "",
+  //     rate: "",
+  //   },
+  // }
 
-  submitComment = async (e) => {
+  const [bookComment, setBookComment] = useState({
+    comment: "",
+    rate: "",
+  })
+
+  const submitComment = async (e) => {
     e.preventDefault()
     try {
       const response = await fetch(
@@ -17,8 +22,8 @@ class AddComments extends Component {
         {
           method: "POST",
           body: JSON.stringify({
-            ...this.state.bookComment,
-            elementId: this.props.asin,
+            ...bookComment,
+            elementId: props.asin,
           }),
           headers: {
             Authorization:
@@ -29,11 +34,15 @@ class AddComments extends Component {
       )
       if (response.ok) {
         alert("SUCCESS! 🥳")
-        this.setState({
-          bookComment: {
-            comment: "",
-            rate: "",
-          },
+        // this.setState({
+        //   bookComment: {
+        //     comment: "",
+        //     rate: "",
+        //   },
+        // })
+        setBookComment({
+          comment: "",
+          rate: "",
         })
       } else {
         alert("ERROR HAPPENED 😔")
@@ -42,50 +51,57 @@ class AddComments extends Component {
       console.log(error)
     }
   }
-  render() {
-    return (
-      <>
-        <h6 className="mt-3 text-center">Add Book Review</h6>
-        <Form onSubmit={this.submitComment}>
-          <Form.Group>
-            <Form.Label>Comment:</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Comment"
-              value={this.state.bookComment.comment}
-              onChange={(e) =>
-                this.setState({
-                  bookComment: {
-                    ...this.state.bookComment,
-                    comment: e.target.value,
-                  },
-                })
-              }
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Rate:</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Rate"
-              value={this.state.bookComment.rate}
-              onChange={(e) =>
-                this.setState({
-                  bookComment: {
-                    ...this.state.bookComment,
-                    rate: e.target.value,
-                  },
-                })
-              }
-            />
-          </Form.Group>
 
-          <Button variant="primary" type="submit">
-            Send Comment
-          </Button>
-        </Form>
-      </>
-    )
-  }
+  return (
+    <>
+      <h6 className="mt-3 text-center">Add Book Review</h6>
+      <Form onSubmit={submitComment}>
+        <Form.Group>
+          <Form.Label>Comment:</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Comment"
+            value={bookComment.comment}
+            onChange={(e) =>
+              // this.setState({
+              //   bookComment: {
+              //     ...bookComment,
+              //     comment: e.target.value,
+              //   },
+              // })
+              setBookComment({
+                ...bookComment,
+                comment: e.target.value,
+              })
+            }
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Rate:</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Rate"
+            value={bookComment.rate}
+            onChange={(e) =>
+              // this.setState({
+              //   bookComment: {
+              //     ...bookComment,
+              //     rate: e.target.value,
+              //   },
+              // })
+              setBookComment({
+                ...bookComment,
+                rate: e.target.value,
+              })
+            }
+          />
+        </Form.Group>
+
+        <Button variant="primary" type="submit">
+          Send Comment
+        </Button>
+      </Form>
+    </>
+  )
 }
 export default AddComments
